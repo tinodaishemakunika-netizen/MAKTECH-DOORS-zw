@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakTech Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+ 
+  <div class="admin-container">
+    <h1>MakTech Doors Admin Control Center</h1>
+ 
+    <div class="admin-card">
+      <h2>Business Settings</h2>
+      <div class="form-group">
+        <label>WhatsApp / Phone Number:</label>
+        <input type="text" id="editPhone" placeholder="263789009829">
+      </div>
+      <div class="form-group">
+        <label>Email Address:</label>
+        <input type="email" id="editEmail" placeholder="info@maktechdoors.co.zw">
+      </div>
+      <div class="form-group">
+        <label>Next Installation / Booking Date:</label>
+        <input type="date" id="availabilityDate">
+      </div>
+      <button onclick="adminSaveSettings()" class="btn-save">Save Settings</button>
+    </div>
+ 
+    <div class="admin-card">
+      <h2>Add New Product to Catalog</h2>
+      <form id="adminDoorForm">
+        <div class="form-group">
+          <label>Door/Gate Name:</label>
+          <input type="text" id="doorName" required>
+        </div>
+        <div class="form-group">
+          <label>Category:</label>
+          <select id="doorCategory">
+            <option value="Garage Doors">Garage Doors</option>
+            <option value="Sliding Gates">Sliding Gates</option>
+            <option value="Aluminium Doors">Aluminium Doors</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price ($):</label>
+          <input type="number" id="doorPrice" required>
+        </div>
+        <div class="form-group">
+          <label>Color:</label>
+          <input type="text" id="doorColor">
+        </div>
+        <div class="form-group">
+          <label>Description:</label>
+          <textarea id="doorDescription" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Door Image:</label>
+          <input type="file" id="doorImage" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn-add">Publish Product</button>
+      </form>
+    </div>
+  </div>
+ 
+  <script src="app.js"></script>
+</body>
+</html>
+ 
