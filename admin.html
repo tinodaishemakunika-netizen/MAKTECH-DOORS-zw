@@ -3,42 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MakTech Admin Dashboard</title>
+  <title>MakTech Admin Panel</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Admin Lock Screen Styling */
+    .login-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100vh;
+      background: var(--navy-dark);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .login-box {
+      background: #FFF; padding: 30px; border-radius: 8px;
+      text-align: center; max-width: 360px; width: 90%;
+      border-top: 5px solid var(--red-primary);
+    }
+    .login-box h2 { color: var(--navy-primary); margin-bottom: 15px; }
+    .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #CCC; border-radius: 4px; text-align: center; font-size: 1.1rem; }
+  </style>
 </head>
 <body class="admin-body">
- 
-  <div class="admin-container">
-    <h1>MakTech Doors Admin Control Center</h1>
- 
-    <div class="admin-card">
-      <h2>Business Settings</h2>
-      <div class="form-group">
-        <label>WhatsApp / Phone Number:</label>
-        <input type="text" id="editPhone" placeholder="263789009829">
-      </div>
-      <div class="form-group">
-        <label>Email Address:</label>
-        <input type="email" id="editEmail" placeholder="info@maktechdoors.co.zw">
-      </div>
-      <div class="form-group">
-        <label>Next Installation / Booking Date:</label>
-        <input type="date" id="availabilityDate">
-      </div>
-      <button onclick="adminSaveSettings()" class="btn-save">Save Settings</button>
+
+  <!-- Simple Admin Lock Modal -->
+  <div class="login-modal" id="loginModal">
+    <div class="login-box">
+      <h2><i class="fa-solid fa-lock"></i> Admin Access</h2>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Enter Admin PIN to manage inventory</p>
+      <input type="password" id="adminPin" placeholder="Enter PIN (Default: 1234)">
+      <button onclick="checkPin()" class="btn-hero" style="width:100%; border:none; cursor:pointer;">Login to Dashboard</button>
     </div>
- 
+  </div>
+
+  <!-- Admin Main Dashboard -->
+  <div class="admin-container" id="adminDashboard" style="display:none; padding: 30px 5%;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <h1 style="color:var(--navy-primary); border-bottom:none;">MakTech Control Panel</h1>
+      <a href="index.html" target="_blank" style="color:var(--red-primary); font-weight:700; text-decoration:none;"><i class="fa-solid fa-eye"></i> View Live Website</a>
+    </div>
+
+    <!-- Form: Add Product to Live Website -->
     <div class="admin-card">
       <h2>Add New Product to Catalog</h2>
-      <form id="adminDoorForm">
+      <form id="addProductForm">
         <div class="form-group">
-          <label>Door/Gate Name:</label>
-          <input type="text" id="doorName" required>
+          <label>Door / Gate Name:</label>
+          <input type="text" id="prodName" placeholder="e.g., Heavy Duty Garage Door" required>
         </div>
         <div class="form-group">
           <label>Category:</label>
-          <select id="doorCategory">
+          <select id="prodCategory">
             <option value="Garage Doors">Garage Doors</option>
             <option value="Sliding Gates">Sliding Gates</option>
             <option value="Aluminium Doors">Aluminium Doors</option>
@@ -46,26 +61,57 @@
         </div>
         <div class="form-group">
           <label>Price ($):</label>
-          <input type="number" id="doorPrice" required>
+          <input type="number" id="prodPrice" placeholder="850" required>
         </div>
         <div class="form-group">
-          <label>Color:</label>
-          <input type="text" id="doorColor">
+          <label>Badge / Tag:</label>
+          <input type="text" id="prodBadge" placeholder="e.g., 8-Lock Pins, Best Seller">
+        </div>
+        <div class="form-group">
+          <label>Image URL:</label>
+          <input type="text" id="prodImg" placeholder="https://images.unsplash.com/..." required>
         </div>
         <div class="form-group">
           <label>Description:</label>
-          <textarea id="doorDescription" rows="3"></textarea>
+          <textarea id="prodDesc" rows="3" placeholder="Door description..."></textarea>
         </div>
-        <div class="form-group">
-          <label>Door Image:</label>
-          <input type="file" id="doorImage" accept="image/*" required>
-        </div>
-        <button type="submit" class="btn-add">Publish Product</button>
+        <button type="submit" class="btn-add">Publish Product to Catalog</button>
       </form>
     </div>
   </div>
- 
-  <script src="app.js"></script>
+
+  <script>
+    // Simple Lock Screen Verification (Default PIN: 1234)
+    function checkPin() {
+      const pin = document.getElementById('adminPin').value;
+      if (pin === '1234') {
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+      } else {
+        alert('Incorrect PIN!');
+      }
+    }
+
+    // Save New Product to Shared Storage
+    document.getElementById('addProductForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const newProduct = {
+        name: document.getElementById('prodName').value,
+        category: document.getElementById('prodCategory').value,
+        price: document.getElementById('prodPrice').value,
+        badge: document.getElementById('prodBadge').value || 'New',
+        img: document.getElementById('prodImg').value,
+        desc: document.getElementById('prodDesc').value
+      };
+
+      const existingProducts = JSON.parse(localStorage.getItem('maktech_products')) || [];
+      existingProducts.push(newProduct);
+      localStorage.setItem('maktech_products', JSON.stringify(existingProducts));
+
+      alert('Product published successfully! Refresh your customer website to view it.');
+      document.getElementById('addProductForm').reset();
+    });
+  </script>
 </body>
 </html>
- 
