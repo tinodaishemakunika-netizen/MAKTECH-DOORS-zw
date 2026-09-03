@@ -3,49 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MakTech Doors - Premium Door Solutions</title>
+  <title>MakTech Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="admin-body">
  
-  <header>
-    <div class="logo">MakTech Doors</div>
-    <nav>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact Us</a>
-    </nav>
-  </header>
+  <div class="admin-container">
+    <h1>MakTech Doors Admin Control Center</h1>
  
-  <section class="hero">
-    <h1>Premium Door Solutions</h1>
-    <p>Aluminium composite sliding gates, high-security garage doors, and custom entrances.</p>
-    <a href="#gallery" class="btn">View Collection</a>
-  </section>
+    <div class="admin-card">
+      <h2>Business Settings</h2>
+      <div class="form-group">
+        <label>WhatsApp / Phone Number:</label>
+        <input type="text" id="editPhone" placeholder="263789009829">
+      </div>
+      <div class="form-group">
+        <label>Email Address:</label>
+        <input type="email" id="editEmail" placeholder="info@maktechdoors.co.zw">
+      </div>
+      <div class="form-group">
+        <label>Next Installation / Booking Date:</label>
+        <input type="date" id="availabilityDate">
+      </div>
+      <button onclick="adminSaveSettings()" class="btn-save">Save Settings</button>
+    </div>
  
-  <section id="contact" class="contact-bar">
-    <div><i class="fa-solid fa-phone"></i> <span id="displayPhone">+263 789 009 829</span></div>
-    <div><i class="fa-solid fa-envelope"></i> <span id="displayEmail">info@maktechdoors.co.zw</span></div>
-    <div><i class="fa-solid fa-calendar-days"></i> Next Install Date: <span id="displayAvailability">Available Now</span></div>
-  </section>
- 
-  <section id="gallery" class="gallery-container">
-    <h2>Our Door Catalog</h2>
-    <div id="doorsContainer" class="doors-grid"></div>
-  </section>
- 
-  <div id="doorModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div id="modalBody"></div>
+    <div class="admin-card">
+      <h2>Add New Product to Catalog</h2>
+      <form id="adminDoorForm">
+        <div class="form-group">
+          <label>Door/Gate Name:</label>
+          <input type="text" id="doorName" required>
+        </div>
+        <div class="form-group">
+          <label>Category:</label>
+          <select id="doorCategory">
+            <option value="Garage Doors">Garage Doors</option>
+            <option value="Sliding Gates">Sliding Gates</option>
+            <option value="Aluminium Doors">Aluminium Doors</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price ($):</label>
+          <input type="number" id="doorPrice" required>
+        </div>
+        <div class="form-group">
+          <label>Color:</label>
+          <input type="text" id="doorColor">
+        </div>
+        <div class="form-group">
+          <label>Description:</label>
+          <textarea id="doorDescription" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Door Image:</label>
+          <input type="file" id="doorImage" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn-add">Publish Product</button>
+      </form>
     </div>
   </div>
- 
-  <a href="https://wa.me/263789009829?text=Hi%20MakTech%20Doors,%20I%20have%20an%20inquiry" target="_blank" class="float-wa">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
  
   <script src="app.js"></script>
 </body>
 </html>
- 
